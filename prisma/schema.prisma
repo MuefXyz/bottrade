@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int      @id @default(autoincrement())
+  telegramId        String   @unique
+  username          String?
+  language          String   @default("id")
+  walletAddress     String?  @unique
+  encryptedPrivateKey String?
+  welcomeMessageId  Int?
+  copyTakeProfitPct Float?
+  copyStopLossPct   Float?
+  copyAmountSol     Float?
+  copyMaxPositions   Int?
+  copyMaxAgeMinutes  Float?
+  copySlippagePct    Float?
+  copyPriorityFeeSol Float?
+  scanMinMarketCapUsd Float?
+  scanMinDevBuySol    Float?
+  scanWindowMinutes   Float?
+  scanPauseMinutes    Float?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model WatchedWallet {
+  id         Int      @id @default(autoincrement())
+  telegramId String
+  address    String
+  createdAt  DateTime @default(now())
+
+  @@unique([telegramId, address])
+  @@index([address])
+}
+
+model CopyPosition {
+  id             Int       @id @default(autoincrement())
+  telegramId     String
+  mint           String
+  symbol         String?
+  sourceWallet   String
+  amountSol      Float
+  tokenAmount    Float?
+  entryPriceUsd  Float?
+  takeProfitPct  Float?
+  stopLossPct    Float?
+  status         String    @default("open")
+  dryRun         Boolean   @default(true)
+  txSignature    String?
+  closeSignature String?
+  closeReason    String?
+  closePriceUsd  Float?
+  pnlPct         Float?
+  openedAt       DateTime  @default(now())
+  closedAt       DateTime?
+
+  @@index([telegramId, status])
+  @@index([mint])
+  @@index([status])
+}

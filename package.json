@@ -1,0 +1,29 @@
+{
+  "name": "pumphunter-wallet-bot",
+  "version": "0.1.0",
+  "description": "Telegram auto trading bot for Solana pump tokens (wallet + scanner + copy-trade)",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "test": "tsx --test test/*.test.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "@solana/web3.js": "^1.99.0",
+    "dotenv": "^16.4.7",
+    "grammy": "^1.46.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "@prisma/client": "^5.22.0",
+    "prisma": "^5.22.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
